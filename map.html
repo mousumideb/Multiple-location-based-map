@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Google Maps APIs</title>
+
+	<link href="style.css" rel="stylesheet">
+<style>
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+#map {
+	height: 100%;
+}
+</style>
+<script>
+var map;
+
+function initMap() {
+	
+	var broadway = {
+		info: '<strong>South Main Street</strong><br>\
+					Jackrabbit Flat Rd <br> Belton, TX 76513<br>\
+					<a href="https://www.google.com/maps/dir/31.0795078,-97.6097287/Jackrabbit+Flat+Rd,+Belton,+TX+76513/@31.0742897,-97.6003993,15z/data=!3m1!4b1!4m10!4m9!1m1!4e1!1m5!1m1!1s0x864547b162b3d1b9:0x2943d6f1b5b54a2!2m2!1d-97.5749481!2d31.0738032!3e0">Get Directions</a>',
+		lat: 31.073803,
+		long: -97.574948
+	};
+
+	var belmont = {
+		info: '<strong>Cityhall</strong><br>\
+					101 North 5th Street<br> Nolanville, TX 76559<br>\
+					<a href="https://www.google.com/maps/dir/31.0795078,-97.6097287/101+N+5th+St,+Nolanville,+TX+76559/@31.0791157,-97.6115115,17z/data=!3m1!4b1!4m18!1m7!3m6!1s0x864547d5d789cc97:0x4eb6592d5c3c693c!2s101+N+5th+St,+Nolanville,+TX+76559!3b1!8m2!3d31.0782772!4d-97.6094098!4m9!1m1!4e1!1m5!1m1!1s0x864547d5d789cc97:0x4eb6592d5c3c693c!2m2!1d-97.6094098!2d31.0782772!3e0">Get Directions</a>',
+		lat: 31.078271,
+		long: -97.609392
+	};
+
+	var prop3 = {
+		info: '<strong>439 10th StNolanville, TX 76559</strong><br>\
+					439 10th St<br>Nolanville, TX 76559<br>\
+					<a href="https://www.google.com/maps/dir/31.0795078,-97.6097287/439+10th+St,+Nolanville,+TX+76559/@31.0782572,-97.6092734,16z/data=!3m1!4b1!4m18!1m7!3m6!1s0x864547ce0743265d:0xf950b57572f33b79!2s439+10th+St,+Nolanville,+TX+76559!3b1!8m2!3d31.0789149!4d-97.6000633!4m9!1m1!4e1!1m5!1m1!1s0x864547ce0743265d:0xf950b57572f33b79!2m2!1d-97.6000811!2d31.07892!3e0">Get Directions</a>',
+		lat: 31.078915,
+		long: -97.600063
+	};
+var prop4 = {
+		info: '<strong>7th Street Nolanville, TX 76559</strong><br>\
+					7th Street Nolanville, <br>  TX 76559<br>\
+					<a href="https://www.google.com/maps/dir/31.0865538,-97.7167365/Farm+to+Market+Spur+439,+Nolanville,+TX+76559/@31.0701979,-97.6961549,13z/data=!3m1!4b1!4m18!1m7!3m6!1s0x8645462b2bf3b1bb:0x73070da9c23a9263!2sFarm+to+Market+Spur+439,+Nolanville,+TX+76559!3b1!8m2!3d31.084988!4d-97.607918!4m9!1m1!4e1!1m5!1m1!1s0x8645462b2bf3b1bb:0x73070da9c23a9263!2m2!1d-97.607918!2d31.084988!3e0">Get Directions</a>',
+		lat: 31.084988,
+		long: -97.607918
+	};
+var prop5 = {
+		info: '<strong>Hwy 190 Nolanville, TX 76559</strong><br>\
+					US-190, <br> , Nolanville, TX<br>\
+					<a href="https://www.google.com/maps/dir/31.0865538,-97.7167365/US-190,+Nolanville,+TX/@31.0971936,-97.749622,14z/data=!3m1!4b1!4m10!4m9!1m1!4e1!1m5!1m1!1s0x862374e4a21902e5:0x980a1ef2c3fb9cbe!2m2!1d-97.7411849!2d31.1016853!3e0">Get Directions</a>',
+		lat: 31.079453,
+		long:-97.616170
+	};
+	var prop6 = {
+		info: '<strong>203 N. Main St, Nolanville, TX 76559</strong><br>\
+					203 N. Main St., <br> Nolanville, TX 76559<br>\
+					<a href="https://www.google.com/maps/dir/31.0865538,-97.7167365/203+N+Main+St,+Nolanville,+TX+76559/@31.0701979,-97.6962491,13z/data=!3m1!4b1!4m18!1m7!3m6!1s0x864547d3fe27b221:0x5a7a4309446fb4f9!2s203+N+Main+St,+Nolanville,+TX+76559!3b1!8m2!3d31.0783918!4d-97.6057806!4m9!1m1!4e1!1m5!1m1!1s0x864547d3fe27b221:0x5a7a4309446fb4f9!2m2!1d-97.6057806!2d31.0783918!3e0">Get Directions</a>',
+		lat: 31.078392,
+		long:-97.605781
+	};
+	var locations = [
+    [broadway.info, broadway.lat, broadway.long, 0],
+      [belmont.info, belmont.lat, belmont.long, 1],
+       [prop3.info, prop3.lat, prop3.long, 2],
+	 [prop4.info, prop4.lat, prop4.long, 3],
+[prop5.info, prop5.lat, prop5.long, 4],  
+[prop6.info, prop6.lat, prop6.long, 5],  	 
+    ];
+
+	var map = new google.maps.Map(document.getElementById('map'), {
+		zoom: 13,
+		center: new google.maps.LatLng(31.078789,-97.605569),
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	});
+
+	var infowindow = new google.maps.InfoWindow({});
+
+	var marker, i;
+
+	for (i = 0; i < locations.length; i++) {
+		marker = new google.maps.Marker({
+			position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+			map: map
+		});
+
+		google.maps.event.addListener(marker, 'click', (function (marker, i) {
+			return function () {
+				infowindow.setContent(locations[i][0]);
+				infowindow.open(map, marker);
+			}
+		})(marker, i));
+	}
+}
+</script>
+
+
+</head>
+
+<body>
+
+	<div id="map"></div>
+
+	
+	<script async defer 
+					src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6BiCkQhIGhdJIipSCFGDp2I0g_tRb830&callback=initMap"></script>
+</body>
+
+</html>
